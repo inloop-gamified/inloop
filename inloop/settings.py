@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'inloop.testrunner',
     'inloop.gitload',
     'inloop.statistics',
+    'inloop.medics',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -115,6 +116,7 @@ TEMPLATES = [{
             'django.contrib.auth.context_processors.auth',
             'django.contrib.messages.context_processors.messages',
             'inloop.common.context_processors.current_site',
+            'inloop.medics.context_processors.pull_notifications',
         ],
         'debug': DEBUG
     },
