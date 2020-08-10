@@ -53,15 +53,18 @@
 
 <div class="{% block container_classes %}container{% endblock %}">
 {% block notifications %}
-<div style="position: fixed; bottom: 2rem; right: 2rem; z-index: 1337;">
+<div style="position: fixed; bottom: 0; right: 0; z-index: 1337;
+            overflow: auto; max-height: 50vh; backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.01); border-top-left-radius: 2rem;
+            border-top-right-radius: 2rem;">
 {% for notification in notifications %}
-<div class="notification alert alert-{{ notification.style }} alert-dismissible" role="alert">
-  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-    <span aria-hidden="true">&times;</span>
-  </button>
-  <p><strong>{{ notification.title }}</strong></p>
-  <p>{{ notification.text }}</p>
-</div>
+  <div style="margin: 2rem;" class="notification alert alert-{{ notification.style }} alert-dismissible" role="alert">
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+    <p><strong>{{ notification.title }}</strong></p>
+    <p>{{ notification.text }}</p>
+  </div>
 {% endfor %}
 </div>
 {% endblock %}
@@ -101,7 +104,7 @@
 <script src="{% static 'vendor/js/bootstrap.min.js' %}"></script>
 
 <script>
-$('.notification').delay(15000).slideUp(500, function() {
+$('.notification').delay(10000).slideUp(500, function() {
   $(this).alert('close');
 });
 </script>

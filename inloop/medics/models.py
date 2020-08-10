@@ -1,6 +1,7 @@
 
 from django.db import models
 from django.conf import settings
+from django.utils import timezone
 
 from inloop.solutions.models import Solution, SolutionFile
 from inloop.tasks.models import Task
@@ -95,6 +96,7 @@ class PlayerDetails(models.Model):
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
     avatar = models.ForeignKey(Avatar, on_delete=models.CASCADE, null=True, blank=True)
 
+
     @property
     def percent_of_level(self):
         return 100 * (self.points_in_level / self.level.next.points)
@@ -124,6 +126,12 @@ class ColleagueTracker(models.Model):
     )
 
 
+class Badge(models.Model):
+    identifier = models.TextField(primary_key=True)
+    reward = models.PositiveIntegerField()
+    description = models.TextField()
+
+
 class Score(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     points = models.IntegerField()
@@ -133,3 +141,18 @@ class Score(models.Model):
 
 class SolutionScore(Score):
     solution = models.OneToOneField(Solution, null=True, blank=True, on_delete=models.CASCADE)
+
+
+class BadgeScore(Score):
+    badge = models.ForeignKey(Badge, on_delete=models.CASCADE)
+
+
+class RankSnapshot(models.Model):
+    player = models.OneToOneField(
+        PlayerDetails,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True
+    )
+    rank = models.PositiveIntegerField()
+    delta = models.IntegerField(default=0)

@@ -1,0 +1,44 @@
+{% extends 'base_site.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/medics.css' %}">
+{% endblock %}
+
+{% block title %}Avatars{% endblock %}
+
+{% block content %}
+
+<h1>Earned achievements <span class="glyphicon glyphicon-ok"></span></h1>
+<p>You unlocked these achievements.</p>
+<hr>
+
+{% for badge in earned_badges %}
+
+    {% if forloop.counter0|divisibleby:2 %}<div class="row">{% endif %}
+
+    <div class="col-sm-6">
+    {% include 'medics/badge.html' with badge=badge style="success"%}
+    </div>
+
+    {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
+
+{% endfor %}
+
+<h1>Open achievements <span class="glyphicon glyphicon-info-sign"></span></h1>
+<p>These achievements were not unlocked yet.</p>
+<hr>
+
+{% for badge in open_badges %}
+
+    {% if forloop.counter0|divisibleby:2 %}<div class="row">{% endif %}
+
+    <div class="col-sm-6">
+    {% include 'medics/badge.html' with badge=badge style="info"%}
+    </div>
+
+    {% if forloop.counter|divisibleby:2 or forloop.last %}</div>{% endif %}
+
+{% endfor %}
+
+{% endblock %}

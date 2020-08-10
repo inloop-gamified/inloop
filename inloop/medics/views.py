@@ -5,7 +5,8 @@ from django.db import models
 
 from inloop.solutions.models import Solution
 from inloop.tasks.models import Task
-from inloop.medics.models import Avatar, Violation, Medic, Score, PlayerDetails, Level, ColleagueTracker
+from inloop.medics.models import Avatar, Badge, BadgeScore, Violation, Medic, Score, PlayerDetails, Level, ColleagueTracker
+from inloop.medics.rewards import reward_badge
 
 from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404
@@ -14,6 +15,7 @@ from django.core.paginator import Paginator
 
 @login_required
 def wiki(request):
+    reward_badge(request.user, 'Explorer')
     return TemplateResponse(request, 'medics/wiki.html', {
         'medics': Medic.objects.all()
     })
@@ -38,10 +40,14 @@ def index(request):
 
 @login_required
 def consultation(request, solution_id):
+    reward_badge(request.user, 'First blood')
+
     solution = get_object_or_404(Solution, pk=solution_id)
     if not request.user == solution.author:
         raise Http404
-    violations = Violation.objects.filter(solution=solution)
+    violations = Violation.objects\
+        .filter(solution=solution)\
+        .order_by('id')
     paginator = Paginator(violations, 1)
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -54,8 +60,12 @@ def consultation(request, solution_id):
 @login_required
 def progress(request, user_id):
     player_details = get_object_or_404(PlayerDetails, user_id=user_id)
+    badge_scores = BadgeScore.objects\
+        .filter(user_id=user_id)\
+        .select_related('badge')
     return TemplateResponse(request, 'medics/progress.html', {
-        'player_details': player_details
+        'player_details': player_details,
+        'badge_scores': badge_scores
     })
 
 
@@ -95,6 +105,7 @@ def add_colleague(request, player_details_id):
         tracked_colleague=colleague_details
     )
     if created:
+        reward_badge(request.user, 'Stalker')
         messages.success(
             request,
             f'Player {colleague_details.user.username} was added to your colleagues!'
@@ -110,6 +121,8 @@ def add_colleague(request, player_details_id):
 @login_required
 def avatars(request):
     if request.method == 'POST':
+        reward_badge(request.user, 'Looking good')
+
         avatar_name = request.POST.get('avatar_name')
         if not avatar_name:
             raise Http404
@@ -124,3 +137,17 @@ def avatars(request):
             'avatars': Avatar.objects.all()
         })
     raise Http404
+
+
+@login_required
+def achievements(request):
+    earned_badges = [
+        s.badge for s in BadgeScore.objects\
+            .filter(user_id=request.user.id)
+            .select_related('badge')
+    ]
+    open_badges = Badge.objects.exclude(identifier__in=earned_badges)
+    return TemplateResponse(request, 'medics/achievements.html', {
+        'earned_badges': earned_badges,
+        'open_badges': open_badges,
+    })

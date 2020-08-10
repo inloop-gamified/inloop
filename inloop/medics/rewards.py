@@ -4,7 +4,7 @@ from django.db import transaction, models
 
 from huey.contrib.djhuey import db_task
 
-from inloop.medics.models import Violation, Notification, SolutionScore, PlayerDetails, Level, Score
+from inloop.medics.models import Badge, BadgeScore, Violation, Notification, SolutionScore, PlayerDetails, Level, Score
 from inloop.solutions.models import Solution
 
 
@@ -57,6 +57,14 @@ def dispatch_solution_score_notification(score: SolutionScore):
     Notification.objects.create(user=score.user, title=title, text=text, style=style)
 
 
+def dispatch_badge_score_notification(score: BadgeScore):
+    badge = score.badge
+    title = f'You achieved the badge "{badge.identifier}" and gained {badge.reward} points!'
+    text = f'{badge.description}'
+    style = 'success'
+    Notification.objects.create(user=score.user, title=title, text=text, style=style)
+
+
 def reward_points_for_solution_submitted(solution: Solution):
     if not solution.passed:
         return
@@ -74,5 +82,17 @@ def reward_points_for_solution_submitted(solution: Solution):
             solution=solution, user=solution.author, points=points
         )
 
-    update_player_points_and_level_async(solution.author)
     dispatch_solution_score_notification(score)
+
+    update_player_points_and_level_async(solution.author)
+
+
+def reward_badge(user, badge_identifier):
+    badge = Badge.objects.get(identifier=badge_identifier)
+    badge_score, created = BadgeScore.objects.get_or_create(
+        user=user, badge=badge, points=badge.reward
+    )
+    if created:
+        dispatch_badge_score_notification(badge_score)
+
+        update_player_points_and_level_async(user)

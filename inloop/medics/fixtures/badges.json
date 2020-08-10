@@ -1,0 +1,42 @@
+[
+  {
+    "model": "medics.badge",
+    "fields": {
+      "identifier": "First blood",
+      "reward": 500,
+      "description": "Consult a code doctor."
+    }
+  },
+  {
+    "model": "medics.badge",
+    "fields": {
+      "identifier": "Looking good",
+      "reward": 250,
+      "description": "Don't be like House M.D. and show your face to the patients."
+    }
+  },
+  {
+    "model": "medics.badge",
+    "fields": {
+      "identifier": "Clean coder",
+      "reward": 400,
+      "description": "Have a healthy patient."
+    }
+  },
+  {
+    "model": "medics.badge",
+    "fields": {
+      "identifier": "Stalker",
+      "reward": 300,
+      "description": "Have an eye on your colleagues."
+    }
+  },
+  {
+    "model": "medics.badge",
+    "fields": {
+      "identifier": "Explorer",
+      "reward": 350,
+      "description": "Get to know the code docs."
+    }
+  }
+]

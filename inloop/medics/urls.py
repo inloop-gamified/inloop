@@ -7,6 +7,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^wiki/$', views.wiki, name='wiki'),
     url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
+    url(r'^achievements/$', views.achievements, name='achievements'),
     url(
         r'^colleagues/add/(?P<player_details_id>[\d]+)/$',
         views.add_colleague,

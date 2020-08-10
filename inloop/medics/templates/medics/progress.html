@@ -6,7 +6,7 @@
 
   <style>
   .profile-container {
-    background: #f0f0f0;
+    background: #fdfdfd;
     border-radius: 1rem;
   }
 
@@ -53,13 +53,27 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
-      <div class="alert alert-success" role="alert">Badge 1</div>
-      <div class="alert alert-success" role="alert">Badge 3</div>
-      <div class="alert alert-success" role="alert">Badge 5</div>
-    </div>
-    <div class="col-sm-3">
-      <div class="alert alert-success" role="alert">Badge 2</div>
+    <div class="col-sm-6">
+      <h4>Achievements</h4>
+      {% if not badge_scores %}
+        {% if player_details.user == user %}
+        <div class="alert alert-warning alert-dismissible" role="alert">
+        You did not earn any achievements yet.
+        </div>
+        {% else %}
+        <div class="alert alert-info alert-dismissible" role="alert">
+        This user did not earn any achievements yet.
+        </div>
+        {% endif %}
+      {% endif %}
+      {% for badge_score in badge_scores %}
+      <div class="alert alert-success" role="alert">
+        <strong>{{ badge_score.badge.identifier }}</strong>:
+        {{ badge_score.badge.description }}
+        ({{ badge_score.points }} Points)
+      </div>
+      {% endfor %}
+      <p>See also the <a href="{% url 'medics:achievements' %}">list of earnable achievements.</a></p>
     </div>
   </div>
 </div>

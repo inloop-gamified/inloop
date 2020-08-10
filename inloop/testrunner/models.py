@@ -6,7 +6,7 @@ from django.db.transaction import atomic
 
 from huey.contrib.djhuey import db_task
 
-from inloop.medics.rewards import reward_points_for_solution_submitted
+from inloop.medics.rewards import reward_points_for_solution_submitted, reward_badge
 from inloop.medics.models import Violation
 from inloop.solutions.models import Solution
 from inloop.testrunner.checkstyle import CheckstyleParser
@@ -40,6 +40,9 @@ def check_solution(solution):
     for name, content in test_output.files.items():
         if name == 'checkstyle_errors.xml':
             violations = CheckstyleParser(content).parse(solution)
+
+    if not violations:
+        reward_badge(solution.author, 'Clean coder')
 
     with atomic():
         Violation.objects.bulk_create(violations)

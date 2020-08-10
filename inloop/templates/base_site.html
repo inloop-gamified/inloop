@@ -9,7 +9,9 @@
     <ul class="dropdown-menu">
       <li><a href="{% url 'medics:index' %}">Waiting Room</a></li>
       <li><a href="{% url 'medics:leaderboard' %}">Leaderboard</a></li>
+      <li role="separator" class="divider"></li>
       <li><a href="{% url 'medics:progress' user.id %}">My Progress</a></li>
+      <li><a href="{% url 'medics:achievements' %}">My Achievements</a></li>
       <li role="separator" class="divider"></li>
       <li><a href="{% url 'medics:wiki' %}">Our Staff</a></li>
     </ul>

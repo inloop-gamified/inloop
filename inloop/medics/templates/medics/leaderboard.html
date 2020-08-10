@@ -9,6 +9,10 @@
 
 {% block content %}
 
+<h1>Leaderboard</h1>
+
+<hr>
+
 <form method="GET">
 <div class="input-group">
   <input type="text" name="query" class="form-control"
@@ -19,7 +23,6 @@
   </span>
 </div>
 </form>
-
 <hr>
 
 {% if not own_player %}
@@ -32,28 +35,49 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>Rank</th>
-      <th>Username</th>
+      <th><span class="glyphicon glyphicon-stats"></span> Rank</th>
+      <th>Avatar</th>
+      <th>User</th>
       <th>Points</th>
       <th>Level</th>
-      <th></th>
     </tr>
   </thead>
   <tbody>
     {% for player in page_obj %}
     <tr id="{{ player.user.username }}"
         {% if player == own_player %} class="info" {% endif %}>
-      <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+      <td>
+        {% if player.ranksnapshot %}
+          {{ player.ranksnapshot.rank }}
+          {% if player.ranksnapshot.delta > 0 %}
+            <span style="color: red">+ {{ player.ranksnapshot.delta }}</span>
+          {% elif player.ranksnapshot.delta == 0 %}
+            <span style="color: grey">± 0</span>
+          {% else %}
+            <span style="color: green">{{ player.ranksnapshot.delta }}</span>
+          {% endif %}
+        {% endif %}
+      </td>
+      <td>
+        {% if player.avatar %}
+          <img
+            width="25" height="25"
+            src="{% static '/img/avatars/' %}{{ player.avatar.name }}.svg">
+        {% endif %}
+      </td>
       <td>
         {{ player.user.username }}
-        {% if player == own_player %} <span class="badge">YOU</span> {% endif %}
+        {% if player != own_player %}
+          | <span><a href="{% url 'medics:add_colleague' player.id %}">Add as colleague</a></span>
+        {% endif %}
       </td>
       <td>{{ player.total_points }}</td>
       <td>{{ player.level.index }} - {{ player.level.name }}</td>
-      <td><a href="{% url 'medics:add_colleague' player.id %}" class="btn btn-primary">Add as colleague</a></td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
+
+<p style="color: grey">Note: <span class="glyphicon glyphicon-stats"></span> Today's ranks are updated at midnight.</p>
 
 {% endblock %}
