@@ -1,0 +1,106 @@
+{% extends 'base_site.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static 'vendor/css/prism.medics.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/medics.css' %}">
+{% endblock %}
+
+{% block title %}Consultation{% endblock %}
+
+{% block content %}
+
+{% for violation in page_obj %}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<h4>{{ violation.solution_file.name }}</h4>
+{% include 'medics/score-badge.html' with solution=violation.solution %}
+</div>
+<hr>
+
+<div id="violation-{{ violation.id }}" style="position: sticky; top: 2rem; z-index: 1337;">
+  <div class="material-shadow code-smell">
+    <div class="bar" data-background-severity="{{ violation.priority }}"></div>
+    <div style="padding: 1rem">
+      <nav aria-label="Page navigation" style="float: right">
+        <ul class="pagination" data-severity="{{ violation.priority }}" style="margin: 0;">
+          {% if page_obj.has_previous %}
+          <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+          {% endif %}
+          <li><a href="#">{{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</a></li>
+          {% if page_obj.has_next %}
+          <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      <div style="padding: 0.25rem; float: left;">
+      <img alt="{{ violation.rule.medic.name }}" src="{% static 'img/staff/' %}{{ violation.rule.medic.name.lower }}_cropped_frown.svg"
+            data-background-severity="{{ violation.priority }}"
+            style="width: 6rem; height: 6rem; border-radius: 6rem; padding: 0.5rem;">
+      </div>
+      <div style="margin-left: 7rem; min-height: 7rem; padding: 0.25rem;">
+        <div style="padding: 0.25rem;" data-severity="{{ violation.priority }}">
+          <strong>-{{ violation.penalty }} Points</strong>: <strong>{{ violation.message }}</strong>
+        </div>
+        <div style="padding: 0.25rem;" data-severity="${this.severity}">
+          {{ violation.rule.explanation }}
+        </div>
+        <div style="font-size: 1.25rem; padding: 0.25rem;">
+          {{ violation.rule.medic.name }}, the {{ violation.rule.medic.profession.lower }}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div data-file="{{ violation.solution_file.name }}"
+     data-highlight-severity="{{ violation.priority }}">
+  <pre class="line-numbers" data-line="{{ violation.start_line }}-{{ violation.end_line }}"
+       ><code class="language-java">{{ violation.solution_file.contents }}</code></pre>
+</div>
+
+{% endfor %}
+
+<nav aria-label="...">
+  <ul class="pager">
+    {% if page_obj.has_previous %}
+      <li class="previous">
+        <a href="?page={{ page_obj.previous_page_number }}">
+          <span aria-hidden="true">&larr;</span> Previous
+        </a>
+      </li>
+    {% else %}
+      <li class="previous">
+        <a href="{% url 'medics:index' %}">
+          Exit
+        </a>
+      </li>
+    {% endif %}
+
+    <li>
+      <a href="{% url 'solutions:editor' solution.task.slug %}">
+        Edit Solution
+      </a>
+    </li>
+
+    {% if page_obj.has_next %}
+      <li class="next">
+        <a href="?page={{ page_obj.next_page_number }}">
+          <span aria-hidden="true">&rarr;</span> Next
+        </a>
+      </li>
+    {% else %}
+      <li class="next">
+        <a href="{% url 'medics:index' %}">
+          Exit
+        </a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% endblock %}
+
+{% block extrabody %}
+  <script src="{% static 'vendor/js/prism.medics.js' %}"></script>
+{% endblock %}

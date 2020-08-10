@@ -98,6 +98,8 @@ class Task(models.Model):
         blank=True
     )
 
+    achievable_points = models.IntegerField(default=1000)
+
     objects = TaskQuerySet.as_manager()
 
     @property

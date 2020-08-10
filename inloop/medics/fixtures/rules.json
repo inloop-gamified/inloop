@@ -1,0 +1,407 @@
+[
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "AvoidNestedBlocks",
+      "explanation": "Nested blocks are often leftovers from the debugging process, they confuse a reader.",
+      "medic": "John"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "EmptyBlock",
+      "explanation": "Empty blocks occur, when a code block is created but never used. They should be removed.",
+      "medic": "John"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "EmptyCatchBlock",
+      "explanation": "Exceptions should be handled in the corresponding catch block. Not handling an exception is error prone.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "NeedBraces",
+      "explanation": "Certain control flow elements, for which it is optional to use curly braces, should always use curly braces. Nesting more than one statement in control flow elements without braces will only influence the first one. Not using curly braces is error prone.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "LeftCurly",
+      "explanation": "Code blocks should always include left curlies.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "RightCurly",
+      "explanation": "Right curlies should be placed in the same line of a potentially following control flow elements, such as if-else or try-catch. Do not place statements in the same line after right curlies.",
+      "medic": "Marc"
+    }
+  },
+
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "FinalClass",
+      "explanation": "Classes with private constructors should be declared as final, because they are not initializable from an outside context.",
+      "medic": "John"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "HideUtilityClassConstructor",
+      "explanation": "Utility classes (classes that contain only static methods or fields in their API) should not have a public constructor, because they are only accessed by their type and not by an object.",
+      "medic": "John"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "OneTopLevelClass",
+      "explanation": "Each top level class (such as public classes or the first class in a file), interface, enum or annotation should reside in its own source file.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ThrowsCount",
+      "explanation": "Throwing too many (different) exceptions makes the handling of these very complex. Apply polymorphism to the exception types (where possible) and reduce the amount of throw statements.",
+      "medic": "John"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "VisibilityModifier",
+      "explanation": "Class members should be private, unless they are static final, immutable or specifically annotated, to enforce encapsulation.",
+      "medic": "John"
+    }
+  },
+
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "AvoidInlineConditionals",
+      "explanation": "Inline conditionals should be avoided, since they are hard to read.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "CovariantEquals",
+      "explanation": "Every class that declares its own equals(...) method should override the equals(Object o) method. This is to make sure that the equals(Object o) method of the Object type is overridden correctly and does, for example, not contain the type of the class itself such as in equals(Foo o) of the class Foo.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "DefaultComesLast",
+      "explanation": "Java allows the default statement to be placed at any position in the switch statement. Placing it at the end makes the switch statement more readable.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "EmptyStatement",
+      "explanation": "The empty statement ; could be placed by accident and lead to problems such as in if(...); do ...",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "EqualsAvoidNull",
+      "explanation": "If a string variable may be null, avoid calling .equals(...) on it to compare it to another, non null string. Instead, call the .equals(...) method on the non null string such as in \"Foo\".equals(otherString).",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "EqualsHashCode",
+      "explanation": "Classes that override either hashCode() or equals(...) should also override the other. Equal objects should always have the same hash code. Hash codes are used, for example, in hash based collections such as HashMap or HashSet.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ExplicitInitialization",
+      "explanation": "Java initializes variables to default values (such as false for boolean or null for object types) before performing any initialization specified in the code. Therefore, if you explicitly initialize variables to their internal default value, Java will run this computation twice, resulting in a minor inefficiency.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "FallThrough",
+      "explanation": "In Java switch statements, when cases do not specify a break, return, throw or continue statement, they fall through to the case specified below them.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "HiddenField",
+      "explanation": "Local variables should not shadow a field that is defined in the same class.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "IllegalCatch",
+      "explanation": "Certain exceptions should not be catched, such as a java.lang.Exception, because they are too general and/or may shadow problems in the control flow.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "IllegalInstantiation",
+      "explanation": "For certain classes, it is preferred to use a factory method instead of a constructor for performance reasons. For example, in the java.lang.Boolean class, constructor invocations should be replaced with the factory method Boolean.valueOf().",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "IllegalThrows",
+      "explanation": "Certain exceptions should not be thrown, such as a java.lang.Exception, because they are too general and/or do not represent the error cause specifically enough.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "IllegalToken",
+      "explanation": "Certain statements should not be used, because they make the code less readable, may lead to confusion or are deprecated in the given context.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "InnerAssignment",
+      "explanation": "All assignments should occur in their own isolated statement to increase readability. Inner assignments such as Integer.toString(i = 2) should be avoided.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "MagicNumber",
+      "explanation": "Numeric literals (except -1, 0, 1 and 2) should be defined as constants, i.e. as a variable or field with the final modifier such as \"static final int SECONDS_PER_DAY = 24 * 60 * 60\".",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "MissingSwitchDefault",
+      "explanation": "Switch statements should contain a default to account for cases that get introduced by future revisions. Default cases can also throw exceptions if they are never expected to be executed.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ModifiedControlVariable",
+      "explanation": "Control variables such as i in for(int i = 0;...) should not be modified manually inside the according control flow block.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "MultipleVariableDeclarations",
+      "explanation": "Each variable declaration should reside in its own statement and line. This increases readability.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "NestedForDepth",
+      "explanation": "Extensive nesting of for blocks decreases readability and may exponentially increase computational efforts.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "NestedIfDepth",
+      "explanation": "Extensive nesting of if blocks decreases readability and may lead to confusion about which branches will be executed in certain situations.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "NestedTryDepth",
+      "explanation": "Extensive nesting of try blocks decreases readability and may lead to confusion about which exceptions will be handled in certain situations.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "OneStatementPerLine",
+      "explanation": "Avoid multiple statements per line. It's very difficult to read multiple statements in one line.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "OverloadMethodsDeclarationOrder",
+      "explanation": "Overloaded methods should be placed next to each other to increase readability. Overloaded methods are methods, which have the same name but different sets of parameters.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ParameterAssignment",
+      "explanation": "Assignments to parameters of a function is often considered poor programming practice, because the parameters may be mutated without knowledge of the outside caller and reused in a potentially erroneous context. Parameters can be declared final.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "SimplifyBooleanExpression",
+      "explanation": "Over complicated boolean expressions are hard to understand and should be simplified.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "SimplifyBooleanReturn",
+      "explanation": "Over complicated boolean return statements are hard to understand and should be simplified.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "StringLiteralEquality",
+      "explanation": "Always use .equals(...) instead of == or != when comparing strings, since the latter will only compare the object references instead of the actual values of the strings.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "VariableDeclarationUsageDistance",
+      "explanation": "Variables should be declared as near to their first usage, as possible.",
+      "medic": "Anne"
+    }
+  },
+
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "BooleanExpressionComplexity",
+      "explanation": "Boolean expressions with too many operators are hard to read, maintain and debug. Too complex expressions may be split into separate expressions.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ClassFanOutComplexity",
+      "explanation": "Reduce the number of classes a given class relies on. Many classes from the standard library are excluded from this restriction, such as ArrayList or NullPointerException. A class with too many dependencies on other classes should be refactored.",
+      "medic": "John"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "CyclomaticComplexity",
+      "explanation": "The control flow of a component should not have too many possible decision paths. Reduce the number of decision points (such as if, for, switch, ... statements).",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "JavaNCSS",
+      "explanation": "The control flow of a component should not have too many executable statements. Reduce the number of executable statements.",
+      "medic": "Anne"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "NPathComplexity",
+      "explanation": "The control flow of a component should not have too many possible decision paths. Reduce the number of decision points (such as if, for, switch, ... statements and complex boolean clauses).",
+      "medic": "Anne"
+    }
+  },
+
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ModifierOrder",
+      "explanation": "The order of modifiers should conform to the Java language specification. Declare modifiers in the following order: public, protected, private, abstract, default, static, final, transient, volatile, synchronized, native, strictfp. Annotations should be placed before any modifier.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "RedundantModifier",
+      "explanation": "In certain contexts, modifiers should be not explicitly specified, because they are already applied by the programming language. For example, interface definitions should not contain the public and abstract modifiers for method declarations.",
+      "medic": "Marc"
+    }
+  },
+
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "AbbreviationAsWordInName",
+      "explanation": "If any abbreviation (consecutive capital letters) is used in a specification, it should not exceed a certain length, to make the specification more readable.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "AbstractClassName",
+      "explanation": "Abstract classes should conform to naming conventions, such as being named \"Abstract...\". Vice versa, classes named in this way should include the abstract modifier.",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ClassTypeParameterName",
+      "explanation": "Class type parameters of generic classes should conform to naming conventions. For example, naming a type parameter \"T\" is ok, whereas naming it \"abc\" such as in MyClass<abc> {} violates the conventions. Type parameters should match the regular expression \"^[a-zA-Z]$\".",
+      "medic": "Marc"
+    }
+  },
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "ConstantName",
+      "explanation": "Constants (static and final fields or interface/annotation fields) should conform to naming conventions. For example, naming a constant \"foo\" or \"BAR\" is ok, whereas naming it \"fooBAR\" such as in final static int fooBAR violates the conventions. Constants should match the regular expression \"^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$\".",
+      "medic": "Marc"
+    }
+  }
+]

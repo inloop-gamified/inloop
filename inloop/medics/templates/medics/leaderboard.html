@@ -1,0 +1,57 @@
+{% extends 'base_site.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/medics.css' %}">
+{% endblock %}
+
+{% block title %}Leaderboard{% endblock %}
+
+{% block content %}
+
+<form method="GET">
+<div class="input-group">
+  <input type="text" name="query" class="form-control"
+         placeholder="Search user by username..."
+         {% if query %}value="{{ query }}"{% endif %}>
+  <span class="input-group-btn">
+    <button class="btn btn-primary" type="submit">Search</button>
+  </span>
+</div>
+</form>
+
+<hr>
+
+{% if not own_player %}
+<div class="alert alert-warning alert-dismissible" role="alert">
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+  To be listed here, submit your first successful solution!
+</div>
+{% endif %}
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Rank</th>
+      <th>Username</th>
+      <th>Points</th>
+      <th>Level</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for player in page_obj %}
+    <tr id="{{ player.user.username }}"
+        {% if player == own_player %} class="info" {% endif %}>
+      <td>{{ forloop.counter0|add:page_obj.start_index }}</td>
+      <td>
+        {{ player.user.username }}
+        {% if player == own_player %} <span class="badge">YOU</span> {% endif %}
+      </td>
+      <td>{{ player.total_points }}</td>
+      <td>{{ player.level.index }} - {{ player.level.name }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

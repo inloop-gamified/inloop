@@ -7,6 +7,7 @@ from inloop.gitload import urls as gitload_urls
 from inloop.solutions import urls as solution_urls
 from inloop.statistics import urls as statistics_urls
 from inloop.tasks import urls as task_urls
+from inloop.medics import urls as medics_urls
 from inloop.views import home, login, logout
 
 urlpatterns = [
@@ -19,6 +20,7 @@ urlpatterns = [
     url(r'^solutions/', include(solution_urls)),
     url(r'^tasks/', include(task_urls)),
     url(r'^statistics/', include(statistics_urls)),
+    url(r'^medics/', include(medics_urls)),
 
     # explicitly override the admin logout url
     url(r'^admin/logout/$', logout),

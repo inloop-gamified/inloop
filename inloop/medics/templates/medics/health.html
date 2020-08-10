@@ -1,0 +1,20 @@
+{% if solution.violation_set.count == 0 %}
+<div style="
+        padding: 1rem;
+        color: white;
+        border-color: #26de81;
+        background: #20bf6b;
+        border-width: 0.25rem;
+        border-style: solid;
+        border-radius: 4rem;"><span class="glyphicon glyphicon-ok"></span> Healthy</div>
+{% else %}
+<a href="{% url 'medics:consultation' solution.id %}" style="
+        padding: 1rem;
+        color: white;
+        text-decoration: none;
+        border-color: #fc5c65;
+        background: #eb3b5a;
+        border-width: 0.25rem;
+        border-style: solid;
+        border-radius: 4rem;"><span class="glyphicon glyphicon-exclamation-sign"></span> Visit the doctor</a>
+{% endif %}

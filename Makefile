@@ -22,6 +22,7 @@ loaddb:
 	poetry run ./manage.py migrate
 	poetry run ./manage.py loaddata about_pages staff_group
 	poetry run ./manage.py loaddata demo_accounts development_site
+	poetry run ./manage.py loaddata rules medics levels
 
 test:
 	poetry run ./manage.py test $(TESTOPTS)

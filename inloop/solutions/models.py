@@ -28,20 +28,25 @@ def hash32(obj):
     return hash_chars[hash(str(obj)) % 32]
 
 
-def get_upload_path(obj, filename):
+def get_upload_path_solution(solution, filename):
     """
     Return an upload file path.
     All files related to a specific solution will share a common base directory.
     """
-    s = obj.solution
-    return 'solutions/{year}/{slug}/{hash}/{id}/{filename}'.format_map({
-        'year': s.submission_date.year,
-        'slug': s.task.slug,
-        # another "random" level to avoid too many files per slug directory
-        'hash': hash32(s.author),
-        'id': s.id,
+    return 'solutions/{year}/{slug}/{id}/{filename}'.format_map({
+        'year': solution.submission_date.year,
+        'slug': solution.task.slug,
+        'id': solution.id,
         'filename': filename
     })
+
+
+def get_upload_path(obj, filename):
+    """
+    Wrap get_upload_path_solution for passing it to the upload_to parameter.
+    """
+    s = obj.solution
+    return get_upload_path_solution(s, filename)
 
 
 def get_archive_upload_path(solution, filename):
