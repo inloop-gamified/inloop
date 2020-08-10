@@ -17,7 +17,8 @@
 <ol class="breadcrumb colorful-nav">
   <li><a href="{% url 'tasks:index' %}">Tasks</a></li>
   <li><a href="{% url 'tasks:category' task.category.slug %}">{{ task.category }}</a></li>
-  <li><a href="{% url 'tasks:detail' task.slug %}">{{ task.title }}</a></li>
+  <li><a href="{% url 'solutions:editor' task.slug %}">{{ task.title }}</a></li>
+  <li><a href="{% url 'solutions:list' task.slug %}">My solutions</a></li>
   <li class="active">Solution
 #{% if impersonate %}{{ solution.id }}{% else %}{{ solution.scoped_id }}{% endif %}
   </li>
@@ -128,8 +129,7 @@
         Click here to download the solution as a zip archive.
       </a>
       {% else %}
-      <a class="list-group-item list-group-item-info" href="#"
-         id="archive-download-bar" onclick="window.createArchive()">
+      <a class="list-group-item list-group-item-info" href="#" id="archive-download-bar">
         Click here to create a downloadable zip archive for this solution.
         <span id="spinner" class="glyphicon spinner float-right"></span>
       </a>
