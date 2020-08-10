@@ -30,11 +30,20 @@
 {% block content %}
 
 <div class="row profile-container material-shadow">
-  <div class="padded ">
+  <div class="padded">
     <div class="col-sm-6">
       <div class="text-center">
-        <img src="{% static '/img/staff/john_cropped_happy.svg' %}"></img>
-        <h4>Admin</h4>
+        {% if player_details.avatar %}
+        <img src="{% static '/img/avatars/' %}{{ player_details.avatar.name }}.svg"></img>
+        {% else %}
+        <div class="silhouette">
+          <img src="{% static '/img/avatars/felix.svg' %}"></img>
+        </div>
+        {% endif %}
+        <h4>{{ player_details.user.username }}</h4>
+        {% if player_details.user == request.user %}
+        <h4><a href="{% url 'medics:avatars' %}" class="btn btn-primary">Choose avatar</a></h4>
+        {% endif %}
         <h5>Level {{ player_details.level.index }} {{ player_details.level.name }}</h5>
         <div class="progress" style="background: lightgrey">
           <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
@@ -61,33 +70,55 @@
 
 {% if not player_details.tracker_set %}
 
-{% if player_details.user == user %}
-<div class="text-center">
-  <button class="btn btn-primary">Add colleagues</button>
-</div>
-{% else %}
-<div class="alert alert-warning alert-dismissible" role="alert">
-This user did not add any colleagues yet.
-</div>
-{% endif %}
+  {% if player_details.user != user %}
+  <div class="alert alert-warning alert-dismissible" role="alert">
+  This user did not add any colleagues yet.
+  </div>
+  {% endif %}
 
 {% else %}
 
-  {% for tracker in player_details.tracker_set %}
+  {% for tracker in player_details.tracker_set.all %}
   {% if forloop.counter0|divisibleby:2 %}<div class="row">{% endif %}
 
   <div class="col-sm-6">
-    <div class="profile-container text-center silhouette padded material-shadow">
-      <img src="{% static '/img/staff/felix_cropped_happy.svg' %}"></img>
-      <h4>Add a colleague</h4>
+    <div class="profile-container text-center padded material-shadow">
+      {% if tracker.tracked_colleague.avatar %}
+      <img src="{% static '/img/avatars/' %}{{ tracker.tracked_colleague.avatar.name }}.svg"></img>
+      {% else %}
+      <div class="silhouette">
+        <img src="{% static '/img/avatars/felix.svg' %}"></img>
+      </div>
+      {% endif %}
+      <h4>{{ tracker.tracked_colleague.user.username }}</h4>
+      <h4><a href="{% url 'medics:progress' tracker.tracked_colleague.user.id %}" class="btn btn-success">Visit profile</a></h4>
+      <h5>Level {{ tracker.tracked_colleague.level.index }} {{ tracker.tracked_colleague.level.name }}</h5>
+      <div class="progress" style="background: lightgrey">
+          <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"
+          style="width: {{ tracker.tracked_colleague.percent_of_level }}%">
+            {{ tracker.tracked_colleague.total_points }} Points
+          </div>
+        </div>
+    </div>
+  </div>
+
+  {% if forloop.counter|divisibleby:2 %}</div>{% endif %}
+
+  {% if forloop.last and player_details.user == user %}
+  <div class="col-sm-6">
+    <div class="profile-container text-center padded material-shadow">
+      <div class="silhouette">
+        <img src="{% static '/img/staff/felix_cropped_happy.svg' %}"></img>
+      </div>
+      <h4>...</h4>
+      <h4><a href="{% url 'medics:leaderboard' %}" class="btn btn-primary">Add a colleague</a></h4>
       <h5>...</h5>
-      <div class="progress">
+      <div class="progress silhouette" style="background: lightgrey">
         <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100" style="width: 45%"></div>
       </div>
     </div>
   </div>
-
-  {% if forloop.counter0|divisibleby:2 %}</div>{% endif %}
+  {% endif %}
 
   {% endfor %}
 

@@ -36,6 +36,7 @@
       <th>Username</th>
       <th>Points</th>
       <th>Level</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -49,6 +50,7 @@
       </td>
       <td>{{ player.total_points }}</td>
       <td>{{ player.level.index }} - {{ player.level.name }}</td>
+      <td><a href="{% url 'medics:add_colleague' player.id %}" class="btn btn-primary">Add as colleague</a></td>
     </tr>
     {% endfor %}
   </tbody>

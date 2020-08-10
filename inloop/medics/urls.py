@@ -8,6 +8,16 @@ urlpatterns = [
     url(r'^wiki/$', views.wiki, name='wiki'),
     url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
     url(
+        r'^colleagues/add/(?P<player_details_id>[\d]+)/$',
+        views.add_colleague,
+        name='add_colleague'
+    ),
+    url(
+        r'^avatars/$',
+        views.avatars,
+        name='avatars'
+    ),
+    url(
         r'^consultation/(?P<solution_id>[\d]+)/$',
         views.consultation,
         name='consultation'

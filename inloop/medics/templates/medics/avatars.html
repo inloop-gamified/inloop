@@ -1,0 +1,31 @@
+{% extends 'base_site.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/medics.css' %}">
+{% endblock %}
+
+{% block title %}Avatars{% endblock %}
+
+{% block content %}
+
+{% for avatar in avatars %}
+
+{% if forloop.counter0|divisibleby:2 %}<div class="row">{% endif %}
+
+<div class="col-sm-6">
+  <div class="text-center" style="padding: 2rem;">
+    <img src="{% static 'img/avatars/' %}{{ avatar.name }}.svg" style="margin: 2rem;"></img>
+    <form method="POST">
+      {% csrf_token %}
+      <input type="hidden" name="avatar_name" value="{{ avatar.name }}">
+      <button class="btn btn-primary" type="submit">Set Avatar</button>
+    </form>
+  </div>
+</div>
+
+{% if forloop.counter|divisibleby:2 %}</div>{% endif %}
+
+{% endfor %}
+
+{% endblock %}

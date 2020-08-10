@@ -1,0 +1,32 @@
+[
+  {
+    "model": "medics.avatar",
+    "fields": {
+      "name": "anne"
+    }
+  },
+  {
+    "model": "medics.avatar",
+    "fields": {
+      "name": "emily"
+    }
+  },
+  {
+    "model": "medics.avatar",
+    "fields": {
+      "name": "felix"
+    }
+  },
+  {
+    "model": "medics.avatar",
+    "fields": {
+      "name": "john"
+    }
+  },
+  {
+    "model": "medics.avatar",
+    "fields": {
+      "name": "marc"
+    }
+  }
+]

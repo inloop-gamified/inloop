@@ -1,12 +1,13 @@
 from django.template.response import TemplateResponse
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.db import models
 
 from inloop.solutions.models import Solution
 from inloop.tasks.models import Task
-from inloop.medics.models import Violation, Medic, Score, PlayerDetails, Level, ColleagueTracker
+from inloop.medics.models import Avatar, Violation, Medic, Score, PlayerDetails, Level, ColleagueTracker
 
-from django.shortcuts import get_object_or_404
+from django.shortcuts import get_object_or_404, redirect
 from django.http import Http404
 from django.core.paginator import Paginator
 
@@ -52,7 +53,7 @@ def consultation(request, solution_id):
 
 @login_required
 def progress(request, user_id):
-    player_details = get_object_or_404(PlayerDetails, user=request.user)
+    player_details = get_object_or_404(PlayerDetails, user_id=user_id)
     return TemplateResponse(request, 'medics/progress.html', {
         'player_details': player_details
     })
@@ -80,3 +81,46 @@ def leaderboard(request):
         'own_player': own_player,
         'query': query
     })
+
+
+@login_required
+def add_colleague(request, player_details_id):
+    tracker_details = get_object_or_404(PlayerDetails, user=request.user)
+    colleague_details = get_object_or_404(PlayerDetails, id=player_details_id)
+    if tracker_details.id == colleague_details.id:
+        messages.warning(request, 'You cannot add yourself as a colleague!')
+        return redirect('medics:leaderboard')
+    _, created = ColleagueTracker.objects.get_or_create(
+        tracker=tracker_details,
+        tracked_colleague=colleague_details
+    )
+    if created:
+        messages.success(
+            request,
+            f'Player {colleague_details.user.username} was added to your colleagues!'
+        )
+    else:
+        messages.info(
+            request,
+            f'Player {colleague_details.user.username} is already in your colleagues!'
+        )
+    return redirect('medics:progress', user_id=request.user.id)
+
+
+@login_required
+def avatars(request):
+    if request.method == 'POST':
+        avatar_name = request.POST.get('avatar_name')
+        if not avatar_name:
+            raise Http404
+        avatar = get_object_or_404(Avatar, name=avatar_name)
+        details = get_object_or_404(PlayerDetails, user=request.user)
+        details.avatar = avatar
+        details.save()
+        messages.success(request, 'Avatar changed successfully!')
+        return redirect('medics:progress', user_id=request.user.id)
+    if request.method == 'GET':
+        return TemplateResponse(request, 'medics/avatars.html', {
+            'avatars': Avatar.objects.all()
+        })
+    raise Http404

@@ -79,6 +79,10 @@ class Level(models.Model):
             return None
 
 
+class Avatar(models.Model):
+    name = models.TextField(primary_key=True)
+
+
 class PlayerDetails(models.Model):
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -89,6 +93,7 @@ class PlayerDetails(models.Model):
 
     total_points = models.PositiveIntegerField(default=0)
     level = models.ForeignKey(Level, on_delete=models.CASCADE)
+    avatar = models.ForeignKey(Avatar, on_delete=models.CASCADE, null=True, blank=True)
 
     @property
     def percent_of_level(self):
@@ -109,12 +114,12 @@ class PlayerDetails(models.Model):
 class ColleagueTracker(models.Model):
     tracker = models.ForeignKey(
         PlayerDetails,
-        related_name='tracker',
+        related_name='tracker_set',
         on_delete=models.CASCADE
     )
     tracked_colleague = models.ForeignKey(
         PlayerDetails,
-        related_name='tracked_colleague',
+        related_name='tracked_colleague_set',
         on_delete=models.CASCADE
     )
 
