@@ -1,5 +1,6 @@
 {% extends 'base_site.html' %}
 {% load markdown %}
+{% load static %}
 
 {% block title %}Homepage{% endblock %}
 
@@ -73,9 +74,21 @@
     {% endfor %}
     </tbody>
   </table>
+
 {% else %}
   <div class="alert alert-info">There are currently no tasks in the system.</div>
 {% endif %}
 
+{% endblock %}
+
+{% block extrafooter %}
+
+{% include 'medics/banner.html' %}
+
+<p>As regards to risks and side-effects, <a href="{% url 'medics:wiki' %}">read further.</a></p>
+<p class="lead">
+  <a class="btn btn-primary" href="{% url 'medics:index' %}" role="button">Make an appointment!</a>
+</p>
+<hr>
 
 {% endblock %}
