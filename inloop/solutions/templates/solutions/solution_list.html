@@ -10,6 +10,7 @@
   <a class="list-group-item" href="{% url 'solutions:detail' solution.task.slug solution.scoped_id %}">
 
     <div class="solution-status">
+      {% include 'medics/score-badge.html' with solution=solution %}
       <span data-id="{{ solution.id }}" class="glyphicon solution-{{ solution.status }}"></span>
     </div>
 
