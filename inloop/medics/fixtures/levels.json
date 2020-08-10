@@ -1,0 +1,66 @@
+[
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 0,
+      "points": 0,
+      "name": "Student"
+    }
+  },
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 1,
+      "points": 1000,
+      "name": "Resident"
+    }
+  },
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 2,
+      "points": 2500,
+      "name": "Specialist"
+    }
+  },
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 3,
+      "points": 4250,
+      "name": "Physician"
+    }
+  },
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 4,
+      "points": 6500,
+      "name": "Senior Physician"
+    }
+  },
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 5,
+      "points": 8500,
+      "name": "Senior Physician"
+    }
+  },
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 6,
+      "points": 10000,
+      "name": "Chief Doctor"
+    }
+  },
+  {
+    "model": "medics.level",
+    "fields": {
+      "index": 7,
+      "points": 15000,
+      "name": "Medical Director"
+    }
+  }
+]

@@ -1,0 +1,20 @@
+{% if solution.solutionscore %}
+<span style="
+    margin-right: 1rem;
+    font-size: 1.5rem;
+    padding: 0.25rem;
+    {% if solution.solutionscore.is_valid %}
+    color: white;
+    border-color: #3867d6;
+    background: #4b7bec;
+    {% else %}
+    color: #ddd;
+    border-color: #f0f0f0;
+    background: #ffffff;
+    {% endif %}
+    border-width: 0.25rem;
+    border-style: solid;
+    border-radius: 4rem;">
+    {{ solution.solutionscore.points }} of {{ solution.task.achievable_points }} points
+</span>
+{% endif %}

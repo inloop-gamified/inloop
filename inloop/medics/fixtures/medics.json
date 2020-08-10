@@ -1,0 +1,37 @@
+[
+  {
+    "model": "medics.medic",
+    "fields": {
+      "name": "Anne",
+      "profession": "General Pracitioner"
+    }
+  },
+  {
+    "model": "medics.medic",
+    "fields": {
+      "name": "Emily",
+      "profession": "Nurse"
+    }
+  },
+  {
+    "model": "medics.medic",
+    "fields": {
+      "name": "Felix",
+      "profession": "Nurse"
+    }
+  },
+  {
+    "model": "medics.medic",
+    "fields": {
+      "name": "John",
+      "profession": "Surgeon"
+    }
+  },
+  {
+    "model": "medics.medic",
+    "fields": {
+      "name": "Marc",
+      "profession": "Plastic Surgeon"
+    }
+  }
+]

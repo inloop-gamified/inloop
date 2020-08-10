@@ -1,0 +1,47 @@
+{% extends 'base_site.html' %}
+{% load static %}
+
+{% block extrahead %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/medics.css' %}">
+{% endblock %}
+
+{% block title %}Medical Staff{% endblock %}
+
+{% block content %}
+
+<ol class="breadcrumb colorful-nav">
+  <li>Medics</li>
+  <li class="active">Our Staff</li>
+</ol>
+
+<div style="text-align: center; margin: 2rem;">
+{% include 'medics/banner.html' %}
+</div>
+
+{% for medic in medics %}
+{% if medic.rule_set.exists %}
+
+<div class="panel panel-primary">
+  <div class="panel-heading" style="display: flex; justify-content: center; align-items: center;">
+    <img style="max-height: 8rem" src="{% static 'img/staff/' %}{{ medic.name.lower }}_cropped_happy.svg">
+    <div style="padding: 2rem;">
+      <h4 class="">Hi i am {{ medic.name }}, the {{ medic.profession.lower }}</h4>
+      <p>I am responsible for the following health issues:</p>
+    </div>
+  </div>
+
+  <table class="table table-striped">
+    <tbody>
+      {% for rule in medic.rule_set.all %}
+      <tr id="{{ rule.identifier }}">
+        <td><strong>{{ rule.identifier }}</strong>: {{ rule.explanation }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% endif %}
+{% endfor %}
+
+{% endblock %}
