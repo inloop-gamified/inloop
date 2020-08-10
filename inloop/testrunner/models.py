@@ -6,7 +6,10 @@ from django.db.transaction import atomic
 
 from huey.contrib.djhuey import db_task
 
+from inloop.medics.rewards import reward_points_for_solution_submitted
+from inloop.medics.models import Violation
 from inloop.solutions.models import Solution
+from inloop.testrunner.checkstyle import CheckstyleParser
 from inloop.testrunner.runner import DockerTestRunner
 
 
@@ -32,7 +35,14 @@ def check_solution(solution):
     """
     runner = DockerTestRunner(settings.TESTRUNNER_OPTIONS)
     test_output = runner.check_task(solution.task.system_name, str(solution.path))
+
+    violations = []
+    for name, content in test_output.files.items():
+        if name == 'checkstyle_errors.xml':
+            violations = CheckstyleParser(content).parse(solution)
+
     with atomic():
+        Violation.objects.bulk_create(violations)
         test_result = TestResult.objects.create(
             solution=solution,
             stdout=test_output.stdout,
@@ -46,6 +56,7 @@ def check_solution(solution):
         ])
         solution.passed = test_result.is_success()
         solution.save()
+    reward_points_for_solution_submitted(solution)
     return test_result
 
 
