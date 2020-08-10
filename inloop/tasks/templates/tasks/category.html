@@ -20,6 +20,7 @@
       {% if have_deadlines %}
       <th>Deadline</th>
       {% endif %}
+      <th>Achievable Points</th>
       <th>Completed</th>
     </tr>
     </thead>
@@ -33,6 +34,7 @@
       {% if have_deadlines %}
       <td>{% firstof task.deadline|date:"d-m-Y" "-"  %}</td>
       {% endif %}
+      <td>{{ task.achievable_points }}</td>
       <td>
       {% if task.completed %}
         <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
