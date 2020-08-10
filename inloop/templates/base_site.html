@@ -4,6 +4,16 @@
 {% block navigation %}
 {% if user.is_authenticated %}
   <li><a href="{% url 'home' %}">Home</a></li>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Medics <span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <li><a href="{% url 'medics:index' %}">Waiting Room</a></li>
+      <li><a href="{% url 'medics:leaderboard' %}">Leaderboard</a></li>
+      <li><a href="{% url 'medics:progress' user.id %}">My Progress</a></li>
+      <li role="separator" class="divider"></li>
+      <li><a href="{% url 'medics:wiki' %}">Our Staff</a></li>
+    </ul>
+  </li>
   <li><a href="{% url 'accounts:profile' %}">My Profile</a></li>
   {% if user.is_superuser or user.is_staff %}
     <li><a href="{% url 'admin:index' %}">Administration</a></li>
