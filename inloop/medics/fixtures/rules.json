@@ -403,5 +403,14 @@
       "explanation": "Constants (static and final fields or interface/annotation fields) should conform to naming conventions. For example, naming a constant \"foo\" or \"BAR\" is ok, whereas naming it \"fooBAR\" such as in final static int fooBAR violates the conventions. Constants should match the regular expression \"^[A-Z][A-Z0-9]*(_[A-Z0-9]+)*$\".",
       "medic": "Marc"
     }
+  },
+
+  {
+    "model": "medics.rule",
+    "fields": {
+      "identifier": "MethodNaming",
+      "explanation": "Methods should be named in \"lowerCamelCase\" to conform to the Java naming conventions. This improves readability and avoids confusion.",
+      "medic": "Marc"
+    }
   }
 ]

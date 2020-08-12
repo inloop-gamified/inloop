@@ -40,6 +40,9 @@ def check_solution(solution):
     for name, content in test_output.files.items():
         if name == 'checkstyle_errors.xml':
             violations = CheckstyleParser(content).parse(solution)
+        if name == 'pmd_errors.xml':
+            # TODO
+            pass
 
     if not violations:
         reward_badge(solution.author, 'Clean coder')

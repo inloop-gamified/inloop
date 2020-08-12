@@ -14,7 +14,7 @@ def update_ranks():
         new_rank = i + 1
         try:
             rank_snapshot = RankSnapshot.objects.get(player=player)
-            delta = rank_snapshot.rank - new_rank
+            delta = new_rank - rank_snapshot.rank
             rank_snapshot.rank = new_rank
             rank_snapshot.delta = delta
             rank_snapshot.save()
